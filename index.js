@@ -1,14 +1,16 @@
 import express from "express";
 import bodyParser from "body-parser";
-import router from "./src/controllers/produtoController.js";
+import useCors from "./src/config/Usecors.js";
+import index from "./src/app/controllers/index.js";
+
 const app = express();
+app.use(useCors());
 
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-app.use(router);
-app.use("/api", router);
+app.use("/api", index());
 
 app.listen(3000, () => {
-  console.log("servidor funcionando");
+  console.log("servidor funcionando na porta 3000");
 });
