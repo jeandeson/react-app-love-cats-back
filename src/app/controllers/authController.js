@@ -13,7 +13,8 @@ router.post("/auth/register", async (req, res) => {
     if (result != -1) {
       return res.status(201).json(result);
     }
-    return res.status(400).json({ Erro: "Error trying to insert verify the fields" });
+    res.statusMessage = "Registration failed";
+    return res.status(400).json({ Erro: "Error trying to regristry new user verify the fields" });
   } catch (error) {
     return res.status(500).json({ error: "Error trying to create " + error });
   }
@@ -22,7 +23,6 @@ router.post("/auth/register", async (req, res) => {
 router.post("/auth/login", async (req, res) => {
   try {
     const result = await authService.login(req.body);
-
     if (result != -1) {
       return res.status(200).json(result);
     }

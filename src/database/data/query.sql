@@ -10,15 +10,13 @@ create table tb_users(
   pass_reset_expires datetime,
 );
 
--- create table tb_users_info(
---   id int auto_increment primary key,
---   user_id int not null,
---   user_image varchar(200) not null,
---   created_at datetime not null,
---   pass_res_token varchar(50) not null,
---   pass_res_expires datetime not null,
---     foreign key (user_id) references tb_users(id)
--- );
+create table tb_users_info(
+  id int auto_increment primary key,
+  user_id int not null,
+  user_image varchar(200) not null,
+  created_at datetime default CURRENT_TIMESTAMP,
+    foreign key (user_id) references tb_users(id)
+);
 
 create table tb_cats(
   id int auto_increment primary key,
@@ -30,8 +28,10 @@ create table tb_cats(
     foreign key (user_id) references tb_users(id)
 );
 
--- create table brands(
---   id int auto_increment primary key,
---   cat_id int foreign key (cat_id_fk) references tb_cats(id),
---   brand varchar(50) not null
--- );
+create table tb_posts(
+  id int auto_increment primary key,
+  user_id int not null,
+  content varchar(500) not null,
+  created_at datetime default current timestamp
+    foreign key (user_id) references tb_users(id)
+)

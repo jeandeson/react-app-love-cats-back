@@ -29,7 +29,10 @@ export default class AuthService {
     const result = await authRepository.register(user);
     if (result) {
       user.id = result[0].insertId;
-      return { user, token: this.generateToken({ id: user.id }) };
+      const catResult = await authRepository.registerCat(user.id, user.cat);
+      if (catResult) {
+        return { user, token: this.generateToken({ id: user.id }) };
+      }
     }
     return -1;
   }
@@ -44,6 +47,14 @@ export default class AuthService {
         user.id = handleResult.id;
         user.name = handleResult.user_name;
         user.email = handleResult.email;
+        user.image = handleResult.image;
+        user.cat = {
+          catName: handleResult.catName,
+          color: handleResult.color,
+          gerere: handleResult.genere,
+          image: handleResult.cat_image,
+          user_id: handleResult.id,
+        };
         user.password = undefined;
         return { user, token: this.generateToken({ id: user.id }) };
       }
