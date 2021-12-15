@@ -1,9 +1,11 @@
 import express from "express";
+import CatService from "../../services/catService.js";
 const router = express.Router();
 
+const catService = new CatService();
 router.get("/cats", async (req, res) => {
   try {
-    const result = await catService.get();
+    const result = await catService.getAll();
     if (result != -1) {
       return res.status(200).json(result);
     }
@@ -51,3 +53,17 @@ router.delete("/cats/:id", async (req, res) => {
     return res.status(500).send({ error: "Internal server error" + error });
   }
 });
+
+router.put("/cats/:id", async (req, res) => {
+  try {
+    const result = await catService.put(req.params.id, req.body);
+    if (result != -1) {
+      return res.status(200).json(result);
+    }
+    return res.status(404).json({ error: "Erro trying to update the cat, verify the id" });
+  } catch (error) {
+    return res.status(500).send({ error: "Internal server error" + error });
+  }
+});
+
+export default router;

@@ -1,11 +1,11 @@
 import Connection from "../../database/connection.js";
 
 const connection = new Connection();
-export default class UserRepository {
+export default class CatRepository {
   async getAll() {
     try {
       const conn = await connection.connect();
-      const [rows] = await conn.query(`SELECT id, user_name, email FROM tb_users`);
+      const [rows] = await conn.query(`SELECT * FROM tb_cats`);
       return rows;
     } catch (error) {
       throw error.message;
@@ -15,18 +15,20 @@ export default class UserRepository {
   async getById(id) {
     try {
       const conn = await connection.connect();
-      const [rows] = await conn.query(`SELECT id, descricao, preco FROM tb_produtos where id = ${id};`);
+      const query = `SELECT * FROM tb_cats where id = ?`;
+      const values = [id];
+      const [rows] = await conn.query(query, values);
       return rows;
     } catch (error) {
       throw error.message;
     }
   }
 
-  async update(id, user) {
+  async update(id, cat) {
     try {
       const conn = await connection.connect();
-      const query = "update tb_users set password = ?, pass_reset_expires = ?, pass_reset_token = ? where id = ?";
-      const values = [user.password, user.pass_reset_expires, user.pass_reset_token, parseInt(id)];
+      const query = "update tb_cats set cat_name = ?, cat_image = ?,  color = ?, genere = ? where id = ?";
+      const values = [cat.catName, cat.cat_image, cat.color, cat.genere, parseInt(id)];
       const rows = await conn.query(query, values);
       return rows;
     } catch (error) {

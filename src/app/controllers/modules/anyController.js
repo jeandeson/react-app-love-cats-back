@@ -1,5 +1,5 @@
 import express from "express";
-import midlewares from "../midlewares/auth.js";
+import midlewares from "../../midlewares/auth.js";
 
 //ROTA PROTEGIDA ACESSADA SOMENTE ATRAVÉS DE UM TOKEN VALIDO.
 const router = express.Router();

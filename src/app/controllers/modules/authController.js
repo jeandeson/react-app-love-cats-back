@@ -1,8 +1,7 @@
 import express from "express";
-import AuthService from "../services/authService.js";
-import UserService from "../services/userService.js";
+import AuthService from "../../services/authService.js";
+
 import crypto from "crypto";
-import mailer from "../../modules/mailler.js";
 
 const router = express.Router();
 const authService = new AuthService();
