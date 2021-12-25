@@ -1,5 +1,5 @@
 import CatRepository from "../repository/catRepository.js";
-import Cat from "../models/user.js";
+import Cat from "../models/cat.js";
 
 const catRepository = new CatRepository();
 export default class UserService {
@@ -11,10 +11,22 @@ export default class UserService {
     return -1;
   }
 
-  async getById(id = null) {
+  async getById(id) {
     const result = await catRepository.getById(id);
-    if (result[0].length > 0) {
-      return [...result][0].shift();
+    if (result) {
+      const handleResult = [...result].shift();
+      return handleResult;
+    }
+    return -1;
+  }
+
+  async post(body) {
+    const cat = new Cat(body);
+    const result = await catRepository.post(cat);
+    if (result[0].affectedRows > 0) {
+      const { insertId } = [...result].shift();
+      cat.id = insertId;
+      return cat;
     }
     return -1;
   }
@@ -23,7 +35,8 @@ export default class UserService {
     const cat = new Cat(body);
     const result = await catRepository.update(id, cat);
     if (result[0].affectedRows > 0) {
-      return result;
+      const handleResult = [...result][0].shift();
+      return handleResult;
     }
     return -1;
   }

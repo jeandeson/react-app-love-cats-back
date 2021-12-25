@@ -1,11 +1,11 @@
 import Connection from "../../database/connection.js";
 
 const connection = new Connection();
-export default class CatRepository {
-  async getAll() {
+export default class LikeRepository {
+  async getAll(post_id) {
     try {
       const conn = await connection.connect();
-      const [rows] = await conn.query(`SELECT * FROM tb_cats`);
+      const [rows] = await conn.query(`SELECT * FROM tb_likes where post_id = ${parseInt(post_id)}`);
       await conn.end();
       return rows;
     } catch (error) {
@@ -16,7 +16,7 @@ export default class CatRepository {
   async getById(id) {
     try {
       const conn = await connection.connect();
-      const query = `SELECT * FROM tb_cats where user_id = ?`;
+      const query = `SELECT * FROM tb_likes where post_id = ?`;
       const values = [parseInt(id)];
       const [rows] = await conn.query(query, values);
       await conn.end();
@@ -26,11 +26,11 @@ export default class CatRepository {
     }
   }
 
-  async post(cat) {
+  async post(body) {
     try {
       const conn = await connection.connect();
-      const query = "insert into tb_cats (cat_name, cat_image, color, genere, user_id) values (?, ?, ?, ?, ?)";
-      const values = [cat.catName, cat.image, cat.color, cat.genere, cat.user_id];
+      const query = "insert into tb_likes (user_id, post_id) values (?, ?)";
+      const values = [body.user_id, body.post_id];
       const rows = await conn.query(query, values);
       await conn.end();
       return rows;
@@ -55,8 +55,8 @@ export default class CatRepository {
   async delete(id) {
     try {
       const conn = await connection.connect();
-      const query = "delete from tb_users where id = ?";
-      const values = [id];
+      const query = "delete from tb_likes where id = ?";
+      const values = [parseInt(id)];
       const rows = await conn.query(query, values);
       await conn.end();
       return rows;

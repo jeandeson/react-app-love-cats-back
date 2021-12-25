@@ -7,6 +7,7 @@ const userService = new UserService();
 router.get("/users/:id", async (req, res) => {
   try {
     const result = await userService.getById(req.params.id);
+
     if (result != -1) {
       return res.status(200).json(result);
     }
@@ -18,11 +19,13 @@ router.get("/users/:id", async (req, res) => {
 
 router.get("/users", async (req, res) => {
   try {
-    const result = await userService.getAll();
+    const { user_name } = req.query;
+    const { user_id } = req.query;
+    const result = await userService.getAll(user_name, user_id);
     if (result != -1) {
       return res.status(200).json(result);
     }
-    return res.status(404).json([]);
+    return res.status(200).json([]);
   } catch (error) {
     return res.status(500).send({ error: "Internal server error" + error });
   }

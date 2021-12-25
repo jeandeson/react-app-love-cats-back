@@ -35,3 +35,22 @@ create table tb_posts(
   created_at datetime default current timestamp
     foreign key (user_id) references tb_users(id)
 )
+
+create table tb_likes(
+  id int auto_increment primary key,
+  user_id int not null,
+  post_id int not null,
+    foreign key (user_id) references tb_users(id)
+    foreign key (post_id) references tb_posts(id),
+)
+
+create table users_follows(
+  id int not null PRIMARY KEY AUTO_INCREMENT,
+  user_id int not null,
+  followed_id int not null
+);
+
+-- CREATE TRIGGER AFTERPOST
+--     AFTER insert ON tb_posts
+--     FOR EACH ROW
+--     INSERT INTO tb_likes (post_id, user_id) VALUES(new.id, new.user_id);

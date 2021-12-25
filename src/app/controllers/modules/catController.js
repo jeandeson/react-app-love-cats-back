@@ -18,7 +18,7 @@ router.get("/cats", async (req, res) => {
 
 router.get("/cats/:id", async (req, res) => {
   try {
-    const result = await catService.get(req.params.id);
+    const result = await catService.getById(req.params.id);
     if (result != -1) {
       return res.status(200).json(result);
     }
@@ -33,7 +33,7 @@ router.post("/cats", async (req, res) => {
   try {
     const result = await catService.post(req.body);
     if (result != -1) {
-      return res.status(204).json(result);
+      return res.status(200).json(result);
     }
     return res.status(400).json({ error: "Erro trying to create the cat, verify the content" });
   } catch (error) {

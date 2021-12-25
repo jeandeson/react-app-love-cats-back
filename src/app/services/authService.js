@@ -47,7 +47,7 @@ export default class AuthService {
         user.id = handleResult.id;
         user.name = handleResult.user_name;
         user.email = handleResult.email;
-        user.image = handleResult.image;
+        user.image = handleResult.user_image;
         user.cat = {
           catName: handleResult.catName,
           color: handleResult.color,

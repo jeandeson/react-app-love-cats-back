@@ -1,9 +1,12 @@
 import express from "express";
 const router = express.Router();
+import PostService from "../../services/postService.js";
 
+const postService = new PostService();
 router.get("/posts", async (req, res) => {
   try {
-    const result = await postService.getAll();
+    const { user_id } = req.query;
+    const result = await postService.getAll(user_id);
     if (result != -1) {
       return res.status(200).json(result);
     }
@@ -16,7 +19,7 @@ router.get("/posts", async (req, res) => {
 
 router.get("/posts/:id", async (req, res) => {
   try {
-    const result = await postService.get(req.params.id);
+    const result = await postService.getById(req.params.id);
     if (result != -1) {
       return res.status(200).json(result);
     }
@@ -67,3 +70,5 @@ router.delete("/posts/:id", async (req, res) => {
     return res.status(500);
   }
 });
+
+export default router;

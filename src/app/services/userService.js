@@ -3,18 +3,18 @@ import User from "../models/user.js";
 
 const userRepository = new UserRepository();
 export default class UserService {
-  async getAll() {
-    const result = await userRepository.getAll();
+  async getAll(name = null, id = null) {
+    const result = await userRepository.getAll(name, id);
     if (result.length > 0) {
       return result;
     }
     return -1;
   }
 
-  async getById(id = null) {
+  async getById(id) {
     const result = await userRepository.getById(id);
-    if (result[0].length > 0) {
-      return [...result][0].shift();
+    if (result[0]) {
+      return [...result][0];
     }
     return -1;
   }
