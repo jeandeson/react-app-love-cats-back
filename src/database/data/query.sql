@@ -44,11 +44,18 @@ create table tb_likes(
     foreign key (post_id) references tb_posts(id),
 )
 
-create table users_follows(
+create table tb_follows(
   id int not null PRIMARY KEY AUTO_INCREMENT,
   user_id int not null,
   followed_id int not null
 );
+
+create table tb_comments{
+  id int not null PRIMARY KEY AUTO_INCREMENT,
+  user_id int not null,
+  post_id int not null,
+  content varchar(200) not null
+}
 
 -- CREATE TRIGGER AFTERPOST
 --     AFTER insert ON tb_posts
