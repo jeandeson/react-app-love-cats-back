@@ -11,8 +11,27 @@ class ActionService {
     }
     return -1;
   }
+
+  async comment(body) {
+    const result = await actionRepository.comment(body);
+    if (result[0].affectedRows > 0) {
+      const { insertId } = [...result].shift();
+      body.id = insertId;
+      return body;
+    }
+    return -1;
+  }
+
   async verifyFollow(body) {
     const result = await actionRepository.verifyFollow(body);
+    if (result[0]) {
+      return result;
+    }
+    return -1;
+  }
+
+  async getTotalFollows(id) {
+    const result = await actionRepository.getTotalFollows(id);
     if (result[0]) {
       return result;
     }

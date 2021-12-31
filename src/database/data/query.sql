@@ -50,12 +50,12 @@ create table tb_follows(
   followed_id int not null
 );
 
-create table tb_comments{
+create table tb_comments(
   id int not null PRIMARY KEY AUTO_INCREMENT,
   user_id int not null,
   post_id int not null,
   content varchar(200) not null
-}
+)
 
 -- CREATE TRIGGER AFTERPOST
 --     AFTER insert ON tb_posts
